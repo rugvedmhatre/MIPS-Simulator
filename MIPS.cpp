@@ -101,7 +101,13 @@ class ALU
       } else if (ALUOP == OR) {
         ALUresult = oprand1 | oprand2;
       } else if (ALUOP == NOR) {
-        ALUresult = ~(oprand1 | oprand2);
+        string operand_string_1 = oprand1.to_string().substr(32 - (int) (log2(oprand1.to_ulong())) - 1);
+        string operand_string_2 = oprand2.to_string().substr(32 - (int) (log2(oprand2.to_ulong())) - 1);
+        operand_string_1 = string(32 - (int)log2(oprand1.to_ulong()) - 1, '1') + operand_string_1;
+        operand_string_2 = string(32 - (int)log2(oprand2.to_ulong()) - 1, '1') + operand_string_2;
+        // cout << operand_string_1 << "\n";
+        // cout << operand_string_2 << "\n";
+        ALUresult = ~ (bitset<32> (operand_string_1) | bitset<32> (operand_string_2));
       }
       
       return ALUresult;
